@@ -5,7 +5,6 @@ interface Post {
     middleName: string;
     lastName:string;
     role:number;
-    _id:any;
 }
    
 export default Post;

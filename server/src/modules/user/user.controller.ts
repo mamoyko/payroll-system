@@ -1,9 +1,14 @@
-import * as express from 'express';
+import { Request, Response, NextFunction, Router } from 'express';
+import userModel from './user.model';
 import User from './user.interface';
+import Controller from '../../interfaces/controller.interface';
+import validationMiddleware from '../../middleware/validation.middleware';
+import CreateUserDto from './user.dto';
  
-class UsersController {
+class UsersController implements Controller {
   public path = '/users';
-  public router = express.Router();
+  public router = Router();
+  private user = userModel;
  
   private users: User[] = [
     {
@@ -12,8 +17,7 @@ class UsersController {
         firstName: 'joel ralph',
         middleName: 'a',
         lastName: 'balignasay',
-        role: 0,
-        _id: 'Lorem Ipsum',
+        role: 0
     }
   ];
  
@@ -26,14 +30,17 @@ class UsersController {
     this.router.post(this.path, this.createAPost);
   }
  
-  getAllPosts = (req: express.Request, res: express.Response) => {
+  getAllPosts = (req: Request, res: Response) => {
     res.send(this.users);
   }
  
-  createAPost = (req: express.Request, res: express.Response) => {
-    const user: User = req.body;
-    this.users.push(user);
-    res.send(user);
+  createAPost = async (req: Request, res: Response) => {
+    const userData: User = req.body.user;
+    const createdUser = new this.user({
+        ...userData
+      });
+    const savedPost = await createdUser.save();
+    res.send(savedPost);
   }
 }
  
