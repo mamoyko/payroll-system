@@ -1,9 +1,9 @@
 import App from './app';
-import UserController from '../src/modules/user/user.controller';
+import UsersController from '../src/modules/user/user.controller';
 
 const app = new App(
     [
-        new UserController(),
+        new UsersController(),
     ],
     5000,
 );

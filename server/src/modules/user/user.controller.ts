@@ -1,7 +1,7 @@
 import * as express from 'express';
 import User from './user.interface';
  
-class PostsController {
+class UsersController {
   public path = '/users';
   public router = express.Router();
  
@@ -16,15 +16,6 @@ class PostsController {
         _id: 'Lorem Ipsum',
     }
   ];
-
-
-//   username: string;
-//     password: string;
-//     firstName: string;
-//     middleName: string;
-//     lastName:string;
-//     role:number;
-//     id:any;
  
   constructor() {
     this.intializeRoutes();
@@ -35,15 +26,15 @@ class PostsController {
     this.router.post(this.path, this.createAPost);
   }
  
-  getAllPosts = (request: express.Request, response: express.Response) => {
-    response.send(this.users);
+  getAllPosts = (req: express.Request, res: express.Response) => {
+    res.send(this.users);
   }
  
-  createAPost = (request: express.Request, response: express.Response) => {
-    const user: User = request.body;
+  createAPost = (req: express.Request, res: express.Response) => {
+    const user: User = req.body;
     this.users.push(user);
-    response.send(user);
+    res.send(user);
   }
 }
  
-export default PostsController;
+export default UsersController;
