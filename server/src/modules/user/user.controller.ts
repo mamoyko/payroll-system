@@ -6,7 +6,7 @@ import validationMiddleware from '../../middleware/validation.middleware';
 import CreateUserDto from './user.dto';
  
 class UsersController implements Controller {
-  public path = '/users';
+  public path = '/api/users';
   public router = Router();
   private user = userModel;
  
@@ -30,8 +30,11 @@ class UsersController implements Controller {
     this.router.post(this.path, this.createAPost);
   }
  
-  getAllPosts = (req: Request, res: Response) => {
-    res.send(this.users);
+  getAllPosts = async (req: Request, res: Response) => {
+    const users = await this.user.find();
+    res.json({
+      users: users
+    })
   }
  
   createAPost = async (req: Request, res: Response) => {

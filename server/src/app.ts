@@ -1,6 +1,17 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as mongoose from 'mongoose';
+import * as cors from "cors";
+
+//options for cors midddleware
+const options:cors.CorsOptions = {
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
+  credentials: true,
+  methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+  origin: 'http://localhost:3000',
+  preflightContinue: false
+};
+
 
 class App {
   public app: express.Application;
@@ -19,6 +30,8 @@ class App {
 
   private initializeMiddlewares() {
     this.app.use(bodyParser.json());
+    this.app.use(cors(options));
+    this.app.options("*",cors(options));
   }
 
   private initializeControllers(controllers) {
