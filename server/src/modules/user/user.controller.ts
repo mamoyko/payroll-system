@@ -27,22 +27,34 @@ class UsersController implements Controller {
  
   public intializeRoutes() {
     this.router.get(this.path, this.getAllPosts);
-    this.router.post(this.path, this.createAPost);
+    this.router.post(this.path,this.registerUser);
+    // this.router.post(this.path, this.createAPost);
   }
  
-  getAllPosts = async (req: Request, res: Response) => {
-    const users = await this.user.find();
+  private getAllPosts = async (req: Request, res: Response) => {
+    const users:any = await this.user.find();
     res.json({
       users: users
     })
   }
+
+  private registerUser = async (req:Request,res:Response) => {
+    try {
+      const userData:User = req.body.user;
+      
+    } catch(err) {
+      res.json({
+        message : "error in api register"
+      })
+    }
+  }
  
-  createAPost = async (req: Request, res: Response) => {
+  private createAPost = async (req: Request, res: Response) => {
     const userData: User = req.body.user;
     const createdUser = new this.user({
         ...userData
       });
-    const savedPost = await createdUser.save();
+    const savedPost:any = await createdUser.save();
     res.send(savedPost);
   }
 }

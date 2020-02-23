@@ -1,4 +1,4 @@
-interface Post {
+interface User {
     username: string;
     password: string;
     firstName: string;
@@ -7,4 +7,4 @@ interface Post {
     role:number;
 }
    
-export default Post;
+export default User;
